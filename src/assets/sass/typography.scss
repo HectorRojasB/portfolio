@@ -1,0 +1,61 @@
+html {
+    font-family: $font-family;
+}
+
+.heading {
+    font-weight: $bold;
+
+    &.h1 {
+        font-size: 150px;
+        line-height: 189px;
+    }
+
+    &.h2 {
+        font-size: 80px;
+        line-height: 100px;
+
+        &.yellow {
+            color: $primary-yellow;
+        }
+    }
+}
+
+.title {
+    font-size: 30px;
+    line-height: 38px;
+    font-weight: $regular;
+    color: $primary-yellow;
+}
+
+.body-text {
+    color: $white;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: $regular;
+}
+
+.tag {
+    font-size: 18px;
+    line-height: 23px;
+    font-weight: $semi-bold;
+
+    &.white {
+        color: $white;
+    }
+
+    &.green {
+        color: $primary-green;
+    }
+}
+
+.link {
+    font-size: 16px;
+    line-height: 20px;
+    color: $light-gray;
+    font-weight: $regular;
+    letter-spacing: 0.2em;
+
+    &.active {
+        color: $active-green;
+    }
+}
