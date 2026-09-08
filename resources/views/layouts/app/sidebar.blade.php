@@ -16,6 +16,27 @@
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
+
+                <flux:sidebar.group :heading="__('Portafolio')" class="grid">
+                    <flux:sidebar.item icon="identification" :href="route('admin.profile.edit')" :current="request()->routeIs('admin.profile.edit')" wire:navigate>
+                        {{ __('Perfil') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="building-office" :href="route('admin.companies')" :current="request()->routeIs('admin.companies')" wire:navigate>
+                        {{ __('Compañías') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="briefcase" :href="route('admin.experiences')" :current="request()->routeIs('admin.experiences')" wire:navigate>
+                        {{ __('Experiencia') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="rectangle-stack" :href="route('admin.projects')" :current="request()->routeIs('admin.projects')" wire:navigate>
+                        {{ __('Proyectos') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="cpu-chip" :href="route('admin.technologies')" :current="request()->routeIs('admin.technologies')" wire:navigate>
+                        {{ __('Tecnologías') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="sparkles" :href="route('admin.interests')" :current="request()->routeIs('admin.interests')" wire:navigate>
+                        {{ __('Intereses') }}
+                    </flux:sidebar.item>
+                </flux:sidebar.group>
             </flux:sidebar.nav>
 
             <flux:spacer />
