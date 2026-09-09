@@ -11,6 +11,7 @@
     <flux:table class="mt-6">
         <flux:table.columns>
             <flux:table.column>Proyecto</flux:table.column>
+            <flux:table.column>Origen</flux:table.column>
             <flux:table.column>Estado</flux:table.column>
             <flux:table.column>Destacado</flux:table.column>
             <flux:table.column></flux:table.column>
@@ -20,6 +21,7 @@
             @forelse ($this->projects as $project)
                 <flux:table.row :key="$project->id">
                     <flux:table.cell variant="strong">{{ $project->title }}</flux:table.cell>
+                    <flux:table.cell>{{ $project->contextLabel() }}</flux:table.cell>
                     <flux:table.cell>{{ $project->statusLabel() }}</flux:table.cell>
                     <flux:table.cell>
                         @if ($project->is_featured)
@@ -33,7 +35,7 @@
                 </flux:table.row>
             @empty
                 <flux:table.row>
-                    <flux:table.cell colspan="4">Aún no hay proyectos registrados.</flux:table.cell>
+                    <flux:table.cell colspan="5">Aún no hay proyectos registrados.</flux:table.cell>
                 </flux:table.row>
             @endforelse
         </flux:table.rows>
@@ -44,6 +46,22 @@
             <flux:heading size="lg">{{ $editingId ? 'Editar proyecto' : 'Nuevo proyecto' }}</flux:heading>
 
             <flux:input wire:model="title" label="Título" required autofocus />
+
+            <div class="grid grid-cols-2 gap-4">
+                <flux:select wire:model.live="context" label="Tipo de proyecto" required>
+                    <flux:select.option value="personal">Proyecto personal</flux:select.option>
+                    <flux:select.option value="freelance">Freelance</flux:select.option>
+                    <flux:select.option value="company">Compañía</flux:select.option>
+                </flux:select>
+
+                @if ($context === 'company')
+                    <flux:select wire:model="company_id" label="Compañía" placeholder="Selecciona una compañía" required>
+                        @foreach ($this->companies as $company)
+                            <flux:select.option value="{{ $company->id }}">{{ $company->name }}</flux:select.option>
+                        @endforeach
+                    </flux:select>
+                @endif
+            </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <flux:input wire:model="excerpt_es" label="Resumen breve (Español)" description="Se muestra en la tarjeta del proyecto" />

@@ -82,7 +82,7 @@ class Projects extends Component
     public function projects(): Collection
     {
         return Project::query()
-            ->with('technologies')
+            ->with(['technologies', 'company'])
             ->when(
                 $this->technology,
                 fn ($query) => $query->whereRelation('technologies', 'technologies.id', $this->technology)
@@ -100,7 +100,7 @@ class Projects extends Component
             return null;
         }
 
-        return Project::query()->with(['technologies', 'images'])->find($this->selectedProject);
+        return Project::query()->with(['technologies', 'images', 'company'])->find($this->selectedProject);
     }
 
     public function render(): View

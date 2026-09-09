@@ -46,7 +46,10 @@
                                 @endif
                             </div>
 
-                            <flux:badge size="sm" class="mt-2 w-fit">{{ $project->statusLabel() }}</flux:badge>
+                            <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+                                <flux:badge size="sm">{{ $project->statusLabel() }}</flux:badge>
+                                <span>{{ $project->contextLabel() }}</span>
+                            </div>
 
                             @if ($project->trans('excerpt'))
                                 <flux:text class="mt-2 flex-1 whitespace-pre-line">{{ $project->trans('excerpt') }}</flux:text>
@@ -142,8 +145,9 @@
 
                 <div class="flex flex-wrap items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
                     <flux:badge size="sm">{{ $p->statusLabel() }}</flux:badge>
+                    <span>{{ $p->contextLabel() }}</span>
                     @if ($p->period())
-                        <span>{{ $p->period() }}</span>
+                        <span>&middot; {{ $p->period() }}</span>
                     @endif
                 </div>
 

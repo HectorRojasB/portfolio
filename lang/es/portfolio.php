@@ -54,6 +54,10 @@ return [
             'completed' => 'Completado',
             'archived' => 'Archivado',
         ],
+        'context' => [
+            'freelance' => 'Freelance',
+            'personal' => 'Proyecto personal',
+        ],
     ],
 
     'interests' => [

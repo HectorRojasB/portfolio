@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\HasTranslatedFields;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -14,6 +15,8 @@ class Project extends Model
     use HasTranslatedFields;
 
     protected $fillable = [
+        'company_id',
+        'context',
         'title',
         'slug',
         'excerpt_es',
@@ -37,6 +40,14 @@ class Project extends Model
     ];
 
     /**
+     * @return BelongsTo<Company, $this>
+     */
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    /**
      * @return BelongsToMany<Technology, $this>
      */
     public function technologies(): BelongsToMany
@@ -55,6 +66,13 @@ class Project extends Model
     public function statusLabel(): string
     {
         return __("portfolio.projects.status.{$this->status}");
+    }
+
+    public function contextLabel(): string
+    {
+        return $this->context === 'company' && $this->company
+            ? $this->company->name
+            : __("portfolio.projects.context.{$this->context}");
     }
 
     public function thumbnailUrl(): ?string

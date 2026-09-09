@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Company;
 use App\Models\Project;
 use App\Models\ProjectImage;
 use App\Models\Technology;
@@ -21,6 +22,10 @@ class Projects extends Component
     use WithFileUploads;
 
     public ?int $editingId = null;
+
+    public string $context = 'personal';
+
+    public ?int $company_id = null;
 
     public string $title = '';
 
@@ -70,6 +75,8 @@ class Projects extends Component
         $project = Project::query()->with('technologies')->findOrFail($id);
 
         $this->editingId = $project->id;
+        $this->context = $project->context;
+        $this->company_id = $project->company_id;
         $this->title = $project->title;
         $this->excerpt_es = $project->excerpt_es;
         $this->excerpt_en = $project->excerpt_en;
@@ -91,6 +98,8 @@ class Projects extends Component
     public function save(): void
     {
         $validated = $this->validate([
+            'context' => 'required|in:company,freelance,personal',
+            'company_id' => 'nullable|required_if:context,company|exists:companies,id',
             'title' => 'required|string|max:255',
             'excerpt_es' => 'nullable|string|max:255',
             'excerpt_en' => 'nullable|string|max:255',
@@ -109,6 +118,10 @@ class Projects extends Component
             'selectedTechnologies' => 'array',
             'selectedTechnologies.*' => 'exists:technologies,id',
         ]);
+
+        if ($validated['context'] !== 'company') {
+            $validated['company_id'] = null;
+        }
 
         if (! $this->editingId) {
             $validated['slug'] = $this->uniqueSlug($validated['title']);
@@ -189,10 +202,11 @@ class Projects extends Component
     private function resetForm(): void
     {
         $this->reset([
-            'editingId', 'title', 'excerpt_es', 'excerpt_en', 'description_es', 'description_en',
+            'editingId', 'company_id', 'title', 'excerpt_es', 'excerpt_en', 'description_es', 'description_en',
             'thumbnail', 'existingThumbnailUrl', 'newImages',
             'url', 'repository_url', 'is_featured', 'started_at', 'finished_at', 'selectedTechnologies',
         ]);
+        $this->context = 'personal';
         $this->status = 'completed';
         $this->sort_order = 0;
         $this->resetValidation();
@@ -205,7 +219,7 @@ class Projects extends Component
     public function projects(): Collection
     {
         return Project::query()
-            ->with('technologies')
+            ->with(['technologies', 'company'])
             ->orderByDesc('is_featured')
             ->orderBy('sort_order')
             ->orderByDesc('started_at')
@@ -219,6 +233,15 @@ class Projects extends Component
     public function technologies(): Collection
     {
         return Technology::query()->orderBy('name')->get();
+    }
+
+    /**
+     * @return Collection<int, Company>
+     */
+    #[Computed]
+    public function companies(): Collection
+    {
+        return Company::query()->orderBy('name')->get();
     }
 
     /**

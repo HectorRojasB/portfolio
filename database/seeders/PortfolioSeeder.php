@@ -78,6 +78,7 @@ class PortfolioSeeder extends Seeder
             ['slug' => 'portafolio-personal'],
             [
                 'title' => 'Portafolio Personal',
+                'context' => 'personal',
                 'excerpt_es' => 'Sitio web para mostrar mis proyectos y experiencia laboral, construido con Laravel y Livewire.',
                 'excerpt_en' => 'Website to showcase my projects and work experience, built with Laravel and Livewire.',
                 'status' => 'in_progress',
@@ -92,6 +93,7 @@ class PortfolioSeeder extends Seeder
             ['slug' => 'gestor-de-tareas'],
             [
                 'title' => 'Gestor de Tareas',
+                'context' => 'freelance',
                 'excerpt_es' => 'Aplicación para organizar tareas y proyectos personales con tableros estilo kanban.',
                 'excerpt_en' => 'Application to organize personal tasks and projects with kanban-style boards.',
                 'status' => 'completed',
