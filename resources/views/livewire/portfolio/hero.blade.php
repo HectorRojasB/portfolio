@@ -16,11 +16,18 @@
             <flux:text class="mt-2 text-lg">{{ $profile->trans('headline') }}</flux:text>
         @endif
 
-        <div class="mt-3 flex flex-wrap items-center justify-center gap-3 text-sm text-zinc-500 dark:text-zinc-400">
+        <div class="mt-5 flex flex-wrap items-center justify-center gap-2">
             @if ($profile->location)
-                <span class="inline-flex items-center gap-1">
+                <span class="inline-flex items-center gap-1 rounded-full border border-zinc-200 px-3 py-1 text-sm text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
                     <flux:icon name="map-pin" class="size-4" />
                     {{ $profile->location }}
+                </span>
+            @endif
+
+            @if ($yearsOfExperience)
+                <span class="inline-flex items-center gap-1 rounded-full border border-zinc-200 px-3 py-1 text-sm text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
+                    <flux:icon name="briefcase" class="size-4" />
+                    {{ $yearsOfExperience }}+ {{ __('portfolio.hero.years_experience') }}
                 </span>
             @endif
 
@@ -28,6 +35,14 @@
                 <flux:badge color="lime" size="sm">{{ __('portfolio.hero.available') }}</flux:badge>
             @endif
         </div>
+
+        @if ($topTechnologies->isNotEmpty())
+            <div class="mt-3 flex flex-wrap items-center justify-center gap-1.5">
+                @foreach ($topTechnologies as $technology)
+                    <flux:badge size="sm" variant="pill">{{ $technology->name }}</flux:badge>
+                @endforeach
+            </div>
+        @endif
 
         @if ($profile->trans('bio'))
             <flux:text class="mx-auto mt-6 max-w-xl text-justify whitespace-pre-line">{{ $profile->trans('bio') }}</flux:text>

@@ -18,6 +18,7 @@ return [
 
     'hero' => [
         'available' => 'Available for hire',
+        'years_experience' => 'years of experience',
         'contact' => 'Contact',
         'download_cv' => 'Download CV',
         'website' => 'Website',

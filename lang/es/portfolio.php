@@ -18,6 +18,7 @@ return [
 
     'hero' => [
         'available' => 'Disponible para trabajar',
+        'years_experience' => 'años de experiencia',
         'contact' => 'Contactar',
         'download_cv' => 'Descargar CV',
         'website' => 'Sitio web',
